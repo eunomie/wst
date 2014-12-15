@@ -100,7 +100,15 @@ class Wst
 
   def pub
     logger.info "Pub".blue
-    FileUtils.cp_r File.join(config['path'], '_pub', '.') , File.join(config['path'], '_site')
+
+    outdir = File.join(config['path'], '_site')
+    indir = File.join(config['path'], '_pub', '.')
+
+    FileUtils.cp_r indir , outdir
+    hidden = Dir.glob("#{indir}*").select do |file|
+      File.basename(file) != '.' && File.basename(file) != '..'
+    end
+    FileUtils.cp_r hidden , outdir
   end
 
   def contents all
