@@ -71,8 +71,11 @@ class Wst
   def compile_js jsname
     lines = read_and_expand jsname
     js = lines.flatten.join
-    #compiled = Uglifier.compile js
-    compiled = js
+    compiled = unless config['debug'] then
+      Uglifier.compile js
+    else
+      js
+    end
     File.open("#{config['path']}/_site/#{jsname.split('/').last}.js", "w") { |f| f.write(compiled) }
   end
 
@@ -123,7 +126,12 @@ class Wst
   def compile_css cssname
     cssfile = get_css cssname
     return if cssfile.nil?
-    sassengine = Sass::Engine.for_file(cssfile, :syntax => sass_syntax(cssfile), :style => :compressed)
+    sass_style = unless config['debug'] then
+      :compressed
+    else
+      :expanded
+    end
+    sassengine = Sass::Engine.for_file(cssfile, :syntax => sass_syntax(cssfile), :style => sass_style)
     css = sassengine.render
 
     File.open("#{config['path']}/_site/#{cssname.split('/').last}.css", "w") { |f| f.write(css) }

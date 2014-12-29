@@ -28,6 +28,7 @@ module Configuration
     @config["__site_url__"] = @config["site_url"]
     @config["site_url"] = "http://localhost:4000" if local
     @config["path"] = location
+    @config["debug"] = ENV['WST_ENV'] != nil && ENV['WST_ENV'].casecmp('debug').zero?
   end
 
   def self.read_default_links
