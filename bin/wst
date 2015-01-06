@@ -4,9 +4,9 @@ require 'wst'
 
 dir = ARGV[0] || Dir.pwd
 
-Logging.logger.formatter = proc do |severity, datetime, progname, msg|
+Wst::Logging.logger.formatter = proc do |severity, datetime, progname, msg|
   "#{msg}\n"
 end
-Configuration.read_config dir, false
+Wst::Configuration.read_config dir, false
 
-Wst.new.generate
+Wst::Wst.new.generate

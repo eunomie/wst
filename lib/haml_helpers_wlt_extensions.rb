@@ -10,7 +10,7 @@ module Haml
     @@wlt_extensions_defined = true
 
     module WltExtensions
-      include Configuration
+      include Wst::Configuration
 
       def link_to name, content, ext = 'html'
         "<a href='#{url_for(content, ext)}'>#{name}</a>"
@@ -71,7 +71,7 @@ module Haml
       end
 
       def partial_haml_content partial
-        HamlContent.new partial_path(partial), content
+        Wst::HamlContent.new partial_path(partial), content
       end
 
       def url_for_string url, ext
