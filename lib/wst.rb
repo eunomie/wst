@@ -4,7 +4,7 @@ require 'post'
 require 'page'
 require 'renderer_factory'
 require 'configuration'
-require "sass"
+require 'sass'
 require 'logging'
 require 'colored'
 require 'uglifier'
