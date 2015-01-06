@@ -2,3 +2,4 @@ _site
 config.yaml
 .sass-cache
 Gemfile.lock
+.idea
