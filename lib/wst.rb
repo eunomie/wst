@@ -3,8 +3,8 @@ require 'haml_helpers_wlt_extensions'
 require 'post'
 require 'page'
 require 'renderer_factory'
+require 'css_renderer'
 require 'configuration'
-require 'sass'
 require 'logging'
 require 'colored'
 require 'uglifier'
@@ -13,6 +13,10 @@ module Wst
   class Wst
     include Logging
     include Configuration
+
+    def initialize
+      @css_renderer = CssRenderer.new
+    end
 
     # @param [Boolean] all Generate all content or only published content
     def generate(all = false)
@@ -23,6 +27,17 @@ module Wst
       pub
     end
 
+    # Compile all css files
+    def css
+      @css_renderer.generate_all
+    end
+
+    # Compile a single css file
+    # @param [String] css_name Css name to compile
+    def compile_css(css_name)
+      @css_renderer.compile css_name
+    end
+
     private
 
     def init
@@ -31,31 +46,18 @@ module Wst
       FileUtils.rm_rf Dir.glob File.join config['path'], '_site/*'
     end
 
-    def css
-      return unless config.has_key? 'assets'
-      return unless config['assets'].has_key? 'css'
-      css_conf = config['assets']['css']
-      return unless css_conf.kind_of? Array
+    #def kss
+    #  return unless config.has_key? 'assets'
+    #  return unless config['assets'].has_key? 'css'
+    #  css_conf = config['assets']['css']
+    #  return unless css_conf.kind_of? Array
 
-      logger.info 'Css'.blue
-      css_conf.each do |css_name|
-        logger.info "  #{css_name}"
-        compile_css css_name
-      end
-    end
-
-    def kss
-      return unless config.has_key? 'assets'
-      return unless config['assets'].has_key? 'css'
-      css_conf = config['assets']['css']
-      return unless css_conf.kind_of? Array
-
-      logger.info 'KSS'.blue
-      css_conf.each do |css_name|
-        logger.info "  #{css_name}"
-        compile_css_expanded css_name
-      end
-    end
+    #  logger.info 'KSS'.blue
+    #  css_conf.each do |css_name|
+    #    logger.info "  #{css_name}"
+    #    compile_css_expanded css_name
+    #  end
+    #end
 
     def js
       return unless config.has_key? 'assets'
@@ -129,47 +131,6 @@ module Wst
     # @return [Array<Content>] All post and page content
     def all_content
       [Post.all, Page.all].flatten
-    end
-
-    # Compile a sass file in css.
-    # @param [String] css_name Name of the css file to create.
-    def compile_css(css_name)
-      css_file = get_css css_name
-      return if css_file.nil?
-      sass_style = unless config['debug'] then
-        :compressed
-      else
-        :expanded
-      end
-      sass_engine = Sass::Engine.for_file(css_file, :syntax => sass_syntax(css_file), :style => sass_style)
-      css = sass_engine.render
-
-      File.open("#{config['path']}/_site/#{css_name.split('/').last}.css", 'w') { |f| f.write(css) }
-    end
-
-    # Compile a sass file in css in expanded mode.
-    # @param [String] css_name Name of the css file to create.
-    def compile_css_expanded(css_name)
-      css_file = get_css css_name
-      return if css_file.nil?
-      sass_engine = Sass::Engine.for_file(css_file, :syntax => sass_syntax(css_file), :style => :expanded)
-      css = sass_engine.render
-
-      File.open("#{config['path']}/_kss/#{css_name.split('/').last}.css", 'w') { |f| f.write(css) }
-    end
-
-    # Get the css file path.
-    # @param [String] css_name Name of the css relatively to _css directory
-    # @return [String] Name of the css relatively to _css directory
-    def get_css(css_name)
-      Dir.glob(File.join(config['path'], '_css', "#{css_name}.*")).first
-    end
-
-    # Get syntax (sass or scss) for a file
-    # @param [String] css Name of the file
-    # @return [symbol] :sass or :scss
-    def sass_syntax(css)
-      File.extname(css).delete('.').to_sym
     end
   end
 end
