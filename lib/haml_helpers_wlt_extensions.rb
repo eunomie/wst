@@ -72,6 +72,22 @@ module Haml
         end
       end
 
+      def tr key, lang = nil
+        l = if lang.nil?
+          if content.prefix?
+            content.prefix
+          else
+            'default'
+          end
+        else
+          lang
+        end
+        if config['translations'].has_key?(l) && config['translations'][l].has_key?(key)
+          config['translations'][l][key]
+        else
+          key
+        end
+      end
 
       private
 

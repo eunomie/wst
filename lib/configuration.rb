@@ -21,6 +21,7 @@ module Wst
     def self.read_config location, local
       Configuration.read_configuration location, local
       Configuration.read_default_links
+      Configuration.read_translations
     end
 
     def self.read_configuration location, local
@@ -36,6 +37,15 @@ module Wst
       @defaultLinks = if File.exists? self.links_file_path then "\n" + File.open(self.links_file_path, "r:utf-8").read else "" end
     end
 
+    def self.read_translations
+      @config['translations'] = {}
+      self.translation_files.each do |file|
+        translation = YAML.load File.open(file, 'r:utf-8').read
+        lang = File.basename file, '.yaml'
+        @config['translations'][lang] = translation
+      end
+    end
+
     def self.valid_location? location
       return false unless File.exists? File.join location, "config.yaml"
       return false unless File.directory? File.join location, "_posts"
@@ -46,6 +56,10 @@ module Wst
 
     def self.links_file_path
       File.join config['path'], "links.md"
+    end
+
+    def self.translation_files
+      Dir.glob File.join config['path'], "_translations", "**.yaml"
     end
   end
 end
