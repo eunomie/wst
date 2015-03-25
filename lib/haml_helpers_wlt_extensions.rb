@@ -32,16 +32,26 @@ module Haml
       #  end
       #end
 
-      def url content, ext = 'html'
-        if content.is_a? String
-          url_for_string content, ext
+      def url content, ext = 'html', prefix = true
+        url = if content.is_a? String
+          content
         else
-          url_for_string content.url, ext
+          content.url
         end
+        url_for_string url, ext, prefix
+      end
+
+      def url_abs content, ext = 'html'
+        url content, ext, false
       end
 
       def render opts = {}
-        engine = Haml::Engine.new partial_haml_content(opts[:partial]).raw_content
+        content = unless opts[:partial].nil?
+          partial_haml_content(opts[:partial], true)
+        else
+          partial_haml_content(opts[:partial_abs], false)
+        end
+        engine = Haml::Engine.new content.raw_content
         engine.render self
       end
 
@@ -65,18 +75,21 @@ module Haml
 
       private
 
-      def partial_path partial
-        default_path = File.join config['path'], '_layouts', "#{partial}.haml"
+      def partial_path partial, prefix
+        p = "#{partial}.haml"
+        p = File.join(content.prefix, p) if prefix && content.prefix?
+        default_path = File.join config['path'], '_layouts', p
         File.join File.dirname(default_path), "_#{File.basename(default_path)}"
       end
 
-      def partial_haml_content partial
-        Wst::HamlContent.new partial_path(partial), content
+      def partial_haml_content partial, prefix
+        Wst::HamlContent.new partial_path(partial, prefix), content
       end
 
-      def url_for_string url, ext
+      def url_for_string url, ext, prefix
         path = url
         path += ".#{ext}" if !url.empty? && File.extname(url).empty?
+        path = "#{content.prefix}/#{path}" if prefix && content.prefix?
         "#{config['site_url']}/#{path}"
       end
     end
