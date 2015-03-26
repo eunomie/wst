@@ -13,7 +13,11 @@ module Haml
       include Wst::Configuration
 
       def link_to name, content, ext = 'html'
-        "<a href='#{url_for(content, ext)}'>#{name}</a>"
+        "<a href='#{url(content, ext)}'>#{name}</a>"
+      end
+
+      def link_to_p name, content, ext = 'html'
+        "<a href='#{url_p(content, ext)}'>#{name}</a>"
       end
 
       #def link_to_if condition, name, content, ext = 'html'
@@ -32,7 +36,7 @@ module Haml
       #  end
       #end
 
-      def url content, ext = 'html', prefix = true
+      def url content, ext = 'html', prefix = false
         url = if content.is_a? String
           content
         else
@@ -41,15 +45,15 @@ module Haml
         url_for_string url, ext, prefix
       end
 
-      def url_abs content, ext = 'html'
-        url content, ext, false
+      def url_p content, ext = 'html'
+        url content, ext, true
       end
 
       def render opts = {}
         content = unless opts[:partial].nil?
-          partial_haml_content(opts[:partial], true)
+          partial_haml_content(opts[:partial], false)
         else
-          partial_haml_content(opts[:partial_abs], false)
+          partial_haml_content(opts[:partial_p], true)
         end
         engine = Haml::Engine.new content.raw_content
         engine.render self
