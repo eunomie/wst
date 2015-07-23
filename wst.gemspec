@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 	s.name = 'wst'
-	s.version = '0.10.0'
-	s.date = '2014-12-12'
+	s.version = '0.10.1'
+	s.date = '2015-07-23'
 	s.summary = 'Web Site Today'
 	s.description = 'A nice web site generator'
 	s.authors = ['Yves Brissaud']
