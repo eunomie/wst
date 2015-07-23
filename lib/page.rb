@@ -6,7 +6,7 @@ require 'cgi'
 module Wst
   module PageComparison
     def <=> obj
-      return url <=> obj.url
+      return content_url <=> obj.content_url
     end
   end
 
@@ -25,7 +25,7 @@ module Wst
       @ext = ext
     end
 
-    def url
+    def content_url
       "#{@cats + '/' if @cats != ''}#{CGI.escape @slug}.html"
     end
 
@@ -45,7 +45,7 @@ module Wst
       @cats.chomp!('/')
     end
 
-    def url
+    def content_url
       "#{@cats + '/' if @cats != ''}#{CGI.escape @slug}.html"
     end
   end

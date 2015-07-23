@@ -20,7 +20,7 @@ module Wst
     end
 
     def write_to_site
-      out = File.join config['path'], '_site', @content.url
+      out = File.join config['path'], '_site', @content.content_url
       FileUtils.mkdir_p File.dirname out
       write_to out
     end

@@ -48,11 +48,11 @@ module Wst
       @plain_content
     end
 
-    def url= url
+    def content_url= url
       @url = url
     end
 
-    def url
+    def content_url
       @url ||= ''
     end
 

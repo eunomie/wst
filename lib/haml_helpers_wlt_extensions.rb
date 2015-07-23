@@ -40,7 +40,7 @@ module Haml
         url = if content.is_a? String
           content
         else
-          content.url
+          content.content_url
         end
         url_for_string url, ext, prefix
       end

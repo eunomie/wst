@@ -13,7 +13,7 @@ module Wst
       @cats.chomp!('/')
     end
 
-    def url
+    def content_url
       generate_url = {
         "year"  => @date.strftime("%Y"),
         "month" => @date.strftime("%m"),

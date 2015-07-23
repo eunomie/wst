@@ -76,7 +76,7 @@ module Wst
     def content(all)
       logger.info 'Content'.blue
       contents(all).each do |doc|
-        logger.info "  #{doc.url}"
+        logger.info "  #{doc.content_url}"
         renderer = RendererFactory.for doc
         renderer.write_to_site
       end
