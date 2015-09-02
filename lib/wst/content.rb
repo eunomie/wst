@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'yaml'
-require 'configuration'
+require 'wst/configuration'
 require 'digest/md5'
 
 module Wst

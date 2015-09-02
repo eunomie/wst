@@ -1,6 +1,6 @@
 # encoding: utf-8
-require 'md_content'
-require 'haml_content'
+require 'wst/md_content'
+require 'wst/haml_content'
 require 'cgi'
 
 module Wst

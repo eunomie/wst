@@ -1,6 +1,6 @@
 # encoding: utf-8
-require 'configuration'
-require 'logging'
+require 'wst/configuration'
+require 'wst/logging'
 
 module Wst
   class JsRenderer

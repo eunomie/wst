@@ -1,8 +1,8 @@
 # encoding: utf-8
-require 'renderer'
-require 'renderer_factory'
+require 'wst/renderer'
+require 'wst/renderer_factory'
 require 'redcarpet'
-require 'html_with_pygments'
+require 'wst/html_with_pygments'
 
 module Wst
   class MdRenderer < Renderer

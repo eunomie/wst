@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'md_content'
+require 'wst/md_content'
 
 module Wst
   class Post < MdContent

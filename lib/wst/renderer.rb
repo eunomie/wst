@@ -1,6 +1,6 @@
 # encoding: utf-8
-require 'configuration'
-require 'haml_content'
+require 'wst/configuration'
+require 'wst/haml_content'
 require 'fileutils'
 
 module Wst

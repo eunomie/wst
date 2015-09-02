@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'content'
+require 'wst/content'
 
 module Wst
   class HamlContent < Content

@@ -1,6 +1,6 @@
 # encoding: utf-8
-require 'content'
-require 'configuration'
+require 'wst/content'
+require 'wst/configuration'
 
 module Wst
   class MdContent < Content

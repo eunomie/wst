@@ -1,7 +1,7 @@
 # encoding: utf-8
-require 'renderer'
+require 'wst/renderer'
 require 'haml'
-require 'configuration'
+require 'wst/configuration'
 
 module Wst
   class HamlRenderer < Renderer

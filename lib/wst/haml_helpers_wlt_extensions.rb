@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'haml'
-require 'haml_content'
-require 'configuration'
+require 'wst/haml_content'
+require 'wst/configuration'
 require 'time'
 require 'html_truncator'
 

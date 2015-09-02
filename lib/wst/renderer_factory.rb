@@ -1,9 +1,9 @@
 # encoding: utf-8
-require 'post'
-require 'page'
-require 'haml_content'
-require 'md_renderer'
-require 'haml_renderer'
+require 'wst/post'
+require 'wst/page'
+require 'wst/haml_content'
+require 'wst/md_renderer'
+require 'wst/haml_renderer'
 
 module Wst
   module RendererFactory
