@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'haml_helpers_wlt_extensions'
+require 'wst/haml_helpers_wlt_extensions'
 require 'wst/post'
 require 'wst/page'
 require 'wst/renderer_factory'
