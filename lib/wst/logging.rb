@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'wst/logger'
+require 'logger'
 
 module Wst
   module Logging
