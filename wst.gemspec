@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name = 'wst'
-	s.version = '0.11.0'
+	s.version = '0.12.0'
 	s.date = '2015-09-02'
 	s.summary = 'Web Site Today'
 	s.description = 'A nice web site generator'
