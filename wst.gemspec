@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 	s.homepage = 'https://github.com/eunomie/wst'
 	s.license = 'MIT'
 
-	s.add_runtime_dependency 'wst-parser', "~>0.2.2"
+	s.add_runtime_dependency 'wst-parser', "~>0.3.0"
 	s.add_runtime_dependency 'haml', "~>4.0"
 	s.add_runtime_dependency 'sass', "~>3.4"
 	s.add_runtime_dependency 'coffee-script', "~>2.3"
