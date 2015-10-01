@@ -2,6 +2,7 @@
 require 'wst/haml_helpers_wlt_extensions'
 require 'wst/post'
 require 'wst/page'
+require 'wst/contents'
 require 'wst/renderer_factory'
 require 'wst/css_renderer'
 require 'wst/js_renderer'
@@ -18,6 +19,7 @@ module Wst
     def initialize
       @css_renderer = CssRenderer.new
       @js_renderer = JsRenderer.new
+      @contents = Contents.new
     end
 
     # @param [Boolean] all Generate all content or only published content
@@ -51,6 +53,12 @@ module Wst
       @js_renderer.compile js_name
     end
 
+    # Get all contents
+    # return Wst::Contents
+    def contents
+      @contents
+    end
+
     private
 
     def init
@@ -75,9 +83,9 @@ module Wst
     # @param [Boolean] all Generate all content or only published content
     def content(all)
       logger.info 'Content'.blue
-      contents(all).each do |doc|
+      @contents.all(all).each do |doc|
         logger.info "  #{doc.content_url}"
-        renderer = RendererFactory.for doc
+        renderer = RendererFactory.for doc, self
         renderer.write_to_site
       end
     end
@@ -93,18 +101,6 @@ module Wst
         File.basename(file) != '.' && File.basename(file) != '..'
       end
       FileUtils.cp_r hidden , out_dir
-    end
-
-    # @param [Boolean] all Get all content or only published content
-    # @return [Array<Content>] Contents
-    def contents(all)
-      return all_content if all
-      all_content.select { |c| c.published }
-    end
-
-    # @return [Array<Content>] All post and page content
-    def all_content
-      [Post.all, Page.all].flatten
     end
   end
 end

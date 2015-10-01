@@ -9,25 +9,28 @@ module Wst
   module RendererFactory
     module_function
 
-    def for content
-      send content.class.name.split('::').last.downcase.to_sym, content
+    def for content, wst
+      send content.class.name.split('::').last.downcase.to_sym, content, wst
     end
 
-    def post content
-      MdRenderer.new content
+    def post content, wst
+      MdRenderer.new content, wst
     end
 
-    def mdpage content
-      MdRenderer.new content
+    def mdpage content, wst
+      MdRenderer.new content, wst
     end
 
-    def hamlpage content
-      HamlRenderer.new content
+    def hamlpage content, wst
+      HamlRenderer.new content, wst
     end
 
-    def hamlcontent content
-      HamlRenderer.new content
+    def xmlpage content, wst
+      XmlRenderer.new content, wst
     end
 
+    def hamlcontent content, wst
+      HamlRenderer.new content, wst
+    end
   end
 end

@@ -7,8 +7,9 @@ module Wst
   class Renderer
     include Configuration
 
-    def initialize content
+    def initialize content, wst
       @content = content
+      @wst = wst
     end
 
     def render
